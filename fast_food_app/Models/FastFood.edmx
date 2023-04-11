@@ -1,0 +1,463 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FastFoodModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CTHD">
+          <Key>
+            <PropertyRef Name="MaCTHD" />
+          </Key>
+          <Property Name="MaCTHD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaHD" Type="int" />
+          <Property Name="MaMonAn" Type="char" MaxLength="20" />
+          <Property Name="SoLuong" Type="int" />
+        </EntityType>
+        <EntityType Name="HD">
+          <Key>
+            <PropertyRef Name="MaHD" />
+          </Key>
+          <Property Name="MaHD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaNhanVien" Type="char" MaxLength="20" />
+          <Property Name="ThoiGian" Type="datetime" />
+        </EntityType>
+        <EntityType Name="LOAIMONAN">
+          <Key>
+            <PropertyRef Name="MaLoaiMonAn" />
+          </Key>
+          <Property Name="MaLoaiMonAn" Type="int" Nullable="false" />
+          <Property Name="TenLoaiMonAN" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="MONAN">
+          <Key>
+            <PropertyRef Name="MaMonAn" />
+          </Key>
+          <Property Name="MaMonAn" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="TenMonAn" Type="nvarchar" MaxLength="20" />
+          <Property Name="GiaTien" Type="float" />
+          <Property Name="Anh" Type="nvarchar(max)" />
+          <Property Name="MaLoaiMonAn" Type="int" />
+          <Property Name="SoLuong" Type="int" />
+        </EntityType>
+        <EntityType Name="NHANVIEN">
+          <Key>
+            <PropertyRef Name="MaNhanVien" />
+          </Key>
+          <Property Name="MaNhanVien" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="HoNhanVien" Type="nvarchar" MaxLength="20" />
+          <Property Name="TenNhanVien" Type="nvarchar" MaxLength="20" />
+          <Property Name="SDT" Type="char" MaxLength="20" />
+          <Property Name="NgaySinh" Type="date" />
+          <Property Name="GioiTinh" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="QUYEN">
+          <Key>
+            <PropertyRef Name="MaQuyen" />
+          </Key>
+          <Property Name="MaQuyen" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="TenQuyen" Type="nvarchar" MaxLength="20" />
+          <Property Name="GhiChu" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TAIKHOAN">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="TenTaiKhoan" Type="char" MaxLength="20" />
+          <Property Name="MatKhau" Type="char" MaxLength="20" />
+          <Property Name="MaQuyen" Type="char" MaxLength="20" />
+          <Property Name="MaNhanVien" Type="char" MaxLength="20" />
+        </EntityType>
+        <Association Name="FK_CTHD_HD">
+          <End Role="HD" Type="Self.HD" Multiplicity="0..1" />
+          <End Role="CTHD" Type="Self.CTHD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HD">
+              <PropertyRef Name="MaHD" />
+            </Principal>
+            <Dependent Role="CTHD">
+              <PropertyRef Name="MaHD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CTHD_MONAN">
+          <End Role="MONAN" Type="Self.MONAN" Multiplicity="0..1" />
+          <End Role="CTHD" Type="Self.CTHD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MONAN">
+              <PropertyRef Name="MaMonAn" />
+            </Principal>
+            <Dependent Role="CTHD">
+              <PropertyRef Name="MaMonAn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HD_NHANVIEN">
+          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="0..1" />
+          <End Role="HD" Type="Self.HD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NHANVIEN">
+              <PropertyRef Name="MaNhanVien" />
+            </Principal>
+            <Dependent Role="HD">
+              <PropertyRef Name="MaNhanVien" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MONAN_LOAIMONAN">
+          <End Role="LOAIMONAN" Type="Self.LOAIMONAN" Multiplicity="0..1" />
+          <End Role="MONAN" Type="Self.MONAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOAIMONAN">
+              <PropertyRef Name="MaLoaiMonAn" />
+            </Principal>
+            <Dependent Role="MONAN">
+              <PropertyRef Name="MaLoaiMonAn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TAIKHOAN_NHANVIEN">
+          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="0..1" />
+          <End Role="TAIKHOAN" Type="Self.TAIKHOAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NHANVIEN">
+              <PropertyRef Name="MaNhanVien" />
+            </Principal>
+            <Dependent Role="TAIKHOAN">
+              <PropertyRef Name="MaNhanVien" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TAIKHOAN_QUYEN">
+          <End Role="QUYEN" Type="Self.QUYEN" Multiplicity="0..1" />
+          <End Role="TAIKHOAN" Type="Self.TAIKHOAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QUYEN">
+              <PropertyRef Name="MaQuyen" />
+            </Principal>
+            <Dependent Role="TAIKHOAN">
+              <PropertyRef Name="MaQuyen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FastFoodModelStoreContainer">
+          <EntitySet Name="CTHD" EntityType="Self.CTHD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HD" EntityType="Self.HD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LOAIMONAN" EntityType="Self.LOAIMONAN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MONAN" EntityType="Self.MONAN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NHANVIEN" EntityType="Self.NHANVIEN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QUYEN" EntityType="Self.QUYEN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TAIKHOAN" EntityType="Self.TAIKHOAN" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CTHD_HD" Association="Self.FK_CTHD_HD">
+            <End Role="HD" EntitySet="HD" />
+            <End Role="CTHD" EntitySet="CTHD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CTHD_MONAN" Association="Self.FK_CTHD_MONAN">
+            <End Role="MONAN" EntitySet="MONAN" />
+            <End Role="CTHD" EntitySet="CTHD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HD_NHANVIEN" Association="Self.FK_HD_NHANVIEN">
+            <End Role="NHANVIEN" EntitySet="NHANVIEN" />
+            <End Role="HD" EntitySet="HD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MONAN_LOAIMONAN" Association="Self.FK_MONAN_LOAIMONAN">
+            <End Role="LOAIMONAN" EntitySet="LOAIMONAN" />
+            <End Role="MONAN" EntitySet="MONAN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAIKHOAN_NHANVIEN" Association="Self.FK_TAIKHOAN_NHANVIEN">
+            <End Role="NHANVIEN" EntitySet="NHANVIEN" />
+            <End Role="TAIKHOAN" EntitySet="TAIKHOAN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAIKHOAN_QUYEN" Association="Self.FK_TAIKHOAN_QUYEN">
+            <End Role="QUYEN" EntitySet="QUYEN" />
+            <End Role="TAIKHOAN" EntitySet="TAIKHOAN" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FastFoodModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CTHD">
+          <Key>
+            <PropertyRef Name="MaCTHD" />
+          </Key>
+          <Property Name="MaCTHD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaHD" Type="Int32" />
+          <Property Name="MaMonAn" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="SoLuong" Type="Int32" />
+          <NavigationProperty Name="HD" Relationship="Self.FK_CTHD_HD" FromRole="CTHD" ToRole="HD" />
+          <NavigationProperty Name="MONAN" Relationship="Self.FK_CTHD_MONAN" FromRole="CTHD" ToRole="MONAN" />
+        </EntityType>
+        <EntityType Name="HD">
+          <Key>
+            <PropertyRef Name="MaHD" />
+          </Key>
+          <Property Name="MaHD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaNhanVien" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="ThoiGian" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CTHDs" Relationship="Self.FK_CTHD_HD" FromRole="HD" ToRole="CTHD" />
+          <NavigationProperty Name="NHANVIEN" Relationship="Self.FK_HD_NHANVIEN" FromRole="HD" ToRole="NHANVIEN" />
+        </EntityType>
+        <EntityType Name="LOAIMONAN">
+          <Key>
+            <PropertyRef Name="MaLoaiMonAn" />
+          </Key>
+          <Property Name="MaLoaiMonAn" Type="Int32" Nullable="false" />
+          <Property Name="TenLoaiMonAN" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MONANs" Relationship="Self.FK_MONAN_LOAIMONAN" FromRole="LOAIMONAN" ToRole="MONAN" />
+        </EntityType>
+        <EntityType Name="MONAN">
+          <Key>
+            <PropertyRef Name="MaMonAn" />
+          </Key>
+          <Property Name="MaMonAn" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="TenMonAn" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="GiaTien" Type="Double" />
+          <Property Name="Anh" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MaLoaiMonAn" Type="Int32" />
+          <Property Name="SoLuong" Type="Int32" />
+          <NavigationProperty Name="CTHDs" Relationship="Self.FK_CTHD_MONAN" FromRole="MONAN" ToRole="CTHD" />
+          <NavigationProperty Name="LOAIMONAN" Relationship="Self.FK_MONAN_LOAIMONAN" FromRole="MONAN" ToRole="LOAIMONAN" />
+        </EntityType>
+        <EntityType Name="NHANVIEN">
+          <Key>
+            <PropertyRef Name="MaNhanVien" />
+          </Key>
+          <Property Name="MaNhanVien" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="HoNhanVien" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="TenNhanVien" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="SDT" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="NgaySinh" Type="DateTime" Precision="0" />
+          <Property Name="GioiTinh" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="HDs" Relationship="Self.FK_HD_NHANVIEN" FromRole="NHANVIEN" ToRole="HD" />
+          <NavigationProperty Name="TAIKHOANs" Relationship="Self.FK_TAIKHOAN_NHANVIEN" FromRole="NHANVIEN" ToRole="TAIKHOAN" />
+        </EntityType>
+        <EntityType Name="QUYEN">
+          <Key>
+            <PropertyRef Name="MaQuyen" />
+          </Key>
+          <Property Name="MaQuyen" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="TenQuyen" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="GhiChu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TAIKHOANs" Relationship="Self.FK_TAIKHOAN_QUYEN" FromRole="QUYEN" ToRole="TAIKHOAN" />
+        </EntityType>
+        <EntityType Name="TAIKHOAN">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="TenTaiKhoan" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="MatKhau" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="MaQuyen" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="MaNhanVien" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="NHANVIEN" Relationship="Self.FK_TAIKHOAN_NHANVIEN" FromRole="TAIKHOAN" ToRole="NHANVIEN" />
+          <NavigationProperty Name="QUYEN" Relationship="Self.FK_TAIKHOAN_QUYEN" FromRole="TAIKHOAN" ToRole="QUYEN" />
+        </EntityType>
+        <Association Name="FK_CTHD_HD">
+          <End Role="HD" Type="Self.HD" Multiplicity="0..1" />
+          <End Role="CTHD" Type="Self.CTHD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HD">
+              <PropertyRef Name="MaHD" />
+            </Principal>
+            <Dependent Role="CTHD">
+              <PropertyRef Name="MaHD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CTHD_MONAN">
+          <End Role="MONAN" Type="Self.MONAN" Multiplicity="0..1" />
+          <End Role="CTHD" Type="Self.CTHD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MONAN">
+              <PropertyRef Name="MaMonAn" />
+            </Principal>
+            <Dependent Role="CTHD">
+              <PropertyRef Name="MaMonAn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HD_NHANVIEN">
+          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="0..1" />
+          <End Role="HD" Type="Self.HD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NHANVIEN">
+              <PropertyRef Name="MaNhanVien" />
+            </Principal>
+            <Dependent Role="HD">
+              <PropertyRef Name="MaNhanVien" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MONAN_LOAIMONAN">
+          <End Role="LOAIMONAN" Type="Self.LOAIMONAN" Multiplicity="0..1" />
+          <End Role="MONAN" Type="Self.MONAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOAIMONAN">
+              <PropertyRef Name="MaLoaiMonAn" />
+            </Principal>
+            <Dependent Role="MONAN">
+              <PropertyRef Name="MaLoaiMonAn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TAIKHOAN_NHANVIEN">
+          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="0..1" />
+          <End Role="TAIKHOAN" Type="Self.TAIKHOAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NHANVIEN">
+              <PropertyRef Name="MaNhanVien" />
+            </Principal>
+            <Dependent Role="TAIKHOAN">
+              <PropertyRef Name="MaNhanVien" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TAIKHOAN_QUYEN">
+          <End Role="QUYEN" Type="Self.QUYEN" Multiplicity="0..1" />
+          <End Role="TAIKHOAN" Type="Self.TAIKHOAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QUYEN">
+              <PropertyRef Name="MaQuyen" />
+            </Principal>
+            <Dependent Role="TAIKHOAN">
+              <PropertyRef Name="MaQuyen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FastFoodEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CTHDs" EntityType="Self.CTHD" />
+          <EntitySet Name="HDs" EntityType="Self.HD" />
+          <EntitySet Name="LOAIMONANs" EntityType="Self.LOAIMONAN" />
+          <EntitySet Name="MONANs" EntityType="Self.MONAN" />
+          <EntitySet Name="NHANVIENs" EntityType="Self.NHANVIEN" />
+          <EntitySet Name="QUYENs" EntityType="Self.QUYEN" />
+          <EntitySet Name="TAIKHOANs" EntityType="Self.TAIKHOAN" />
+          <AssociationSet Name="FK_CTHD_HD" Association="Self.FK_CTHD_HD">
+            <End Role="HD" EntitySet="HDs" />
+            <End Role="CTHD" EntitySet="CTHDs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CTHD_MONAN" Association="Self.FK_CTHD_MONAN">
+            <End Role="MONAN" EntitySet="MONANs" />
+            <End Role="CTHD" EntitySet="CTHDs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HD_NHANVIEN" Association="Self.FK_HD_NHANVIEN">
+            <End Role="NHANVIEN" EntitySet="NHANVIENs" />
+            <End Role="HD" EntitySet="HDs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MONAN_LOAIMONAN" Association="Self.FK_MONAN_LOAIMONAN">
+            <End Role="LOAIMONAN" EntitySet="LOAIMONANs" />
+            <End Role="MONAN" EntitySet="MONANs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAIKHOAN_NHANVIEN" Association="Self.FK_TAIKHOAN_NHANVIEN">
+            <End Role="NHANVIEN" EntitySet="NHANVIENs" />
+            <End Role="TAIKHOAN" EntitySet="TAIKHOANs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAIKHOAN_QUYEN" Association="Self.FK_TAIKHOAN_QUYEN">
+            <End Role="QUYEN" EntitySet="QUYENs" />
+            <End Role="TAIKHOAN" EntitySet="TAIKHOANs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FastFoodModelStoreContainer" CdmEntityContainer="FastFoodEntities">
+          <EntitySetMapping Name="CTHDs">
+            <EntityTypeMapping TypeName="FastFoodModel.CTHD">
+              <MappingFragment StoreEntitySet="CTHD">
+                <ScalarProperty Name="MaCTHD" ColumnName="MaCTHD" />
+                <ScalarProperty Name="MaHD" ColumnName="MaHD" />
+                <ScalarProperty Name="MaMonAn" ColumnName="MaMonAn" />
+                <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HDs">
+            <EntityTypeMapping TypeName="FastFoodModel.HD">
+              <MappingFragment StoreEntitySet="HD">
+                <ScalarProperty Name="MaHD" ColumnName="MaHD" />
+                <ScalarProperty Name="MaNhanVien" ColumnName="MaNhanVien" />
+                <ScalarProperty Name="ThoiGian" ColumnName="ThoiGian" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LOAIMONANs">
+            <EntityTypeMapping TypeName="FastFoodModel.LOAIMONAN">
+              <MappingFragment StoreEntitySet="LOAIMONAN">
+                <ScalarProperty Name="MaLoaiMonAn" ColumnName="MaLoaiMonAn" />
+                <ScalarProperty Name="TenLoaiMonAN" ColumnName="TenLoaiMonAN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MONANs">
+            <EntityTypeMapping TypeName="FastFoodModel.MONAN">
+              <MappingFragment StoreEntitySet="MONAN">
+                <ScalarProperty Name="MaMonAn" ColumnName="MaMonAn" />
+                <ScalarProperty Name="TenMonAn" ColumnName="TenMonAn" />
+                <ScalarProperty Name="GiaTien" ColumnName="GiaTien" />
+                <ScalarProperty Name="Anh" ColumnName="Anh" />
+                <ScalarProperty Name="MaLoaiMonAn" ColumnName="MaLoaiMonAn" />
+                <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NHANVIENs">
+            <EntityTypeMapping TypeName="FastFoodModel.NHANVIEN">
+              <MappingFragment StoreEntitySet="NHANVIEN">
+                <ScalarProperty Name="MaNhanVien" ColumnName="MaNhanVien" />
+                <ScalarProperty Name="HoNhanVien" ColumnName="HoNhanVien" />
+                <ScalarProperty Name="TenNhanVien" ColumnName="TenNhanVien" />
+                <ScalarProperty Name="SDT" ColumnName="SDT" />
+                <ScalarProperty Name="NgaySinh" ColumnName="NgaySinh" />
+                <ScalarProperty Name="GioiTinh" ColumnName="GioiTinh" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QUYENs">
+            <EntityTypeMapping TypeName="FastFoodModel.QUYEN">
+              <MappingFragment StoreEntitySet="QUYEN">
+                <ScalarProperty Name="MaQuyen" ColumnName="MaQuyen" />
+                <ScalarProperty Name="TenQuyen" ColumnName="TenQuyen" />
+                <ScalarProperty Name="GhiChu" ColumnName="GhiChu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TAIKHOANs">
+            <EntityTypeMapping TypeName="FastFoodModel.TAIKHOAN">
+              <MappingFragment StoreEntitySet="TAIKHOAN">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TenTaiKhoan" ColumnName="TenTaiKhoan" />
+                <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
+                <ScalarProperty Name="MaQuyen" ColumnName="MaQuyen" />
+                <ScalarProperty Name="MaNhanVien" ColumnName="MaNhanVien" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,63 @@
+﻿@model IEnumerable<fast_food_app.Models.MONAN>
+@using fast_food_app.Models;
+@*@using PagedList.Mvc;*@
+@using System.Web.Optimization;
+@*@model PagedList.PagedList<QuanLyCuaHangThucAnNhanh.Models.MONAN>*@
+@{ ViewBag.Title = "Home Page"; }
+
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+<head>
+    <style>
+        .card {
+            width: 221px;
+            height: 299px;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
+
+        .SoLuong {
+            text-align: center;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        }
+
+        #margin-card {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 15px;
+        }
+    </style>
+</head>
+
+
+
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+<div class=" col-sm-6 col-md-3 col-lg-3" id="margin-card">
+    <div class="card">
+        @Html.Image("../" + item.Anh, "alt", "150") <br />
+        <p class="SoLuong"> @Html.DisplayFor(modelItem => item.SoLuong)</p>
+        @Html.DisplayFor(modelItem => item.TenMonAn):
+        @Html.DisplayFor(modelItem => item.GiaTien)<br /> <br />
+
+        @*<a class="btn btn-info btn-sm" href="@Url.Action("Edit", "MONANs", new { id = item.MaMonAn.Trim() })">Sửa</a>*@
+        <a class="btn btn-success btn-sm" href="@Url.Action("CreateOrder","Order", new { MaMonAn = item.MaMonAn })">Tạo order</a>
+    </div>
+</div>}
+
+    </div>
+    <div class="MenuPage" style="display:inline;text-align:center">
+
+        @*@Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))*@
+    </div>
+</div>
+
+

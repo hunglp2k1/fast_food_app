@@ -1,0 +1,134 @@
+﻿@using System.Web.Optimization;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cửa hàng thức ăn nhanh</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        .table {
+            background: #FFFFFF;
+            box-shadow: 4px 12px 9px 5px rgba(234, 124, 105, 0.34);
+            font-size: 15px;
+        }
+
+
+
+
+        .title {
+            width: 100%;
+            height: 58px;
+            left: 386px;
+            top: 189px;
+            background: #EA7C69;
+            box-shadow: 4px 7px 4px rgba(0, 0, 0, 0.25);
+            line-height: 58px;
+            color: white;
+            padding-left: 15px;
+            font-weight: bold;
+        }
+
+        select {
+            display: block;
+            width: 100%;
+            height: 34px;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .tieude {
+            font-weight: bold;
+            color: #EA7C69;
+        }
+
+        .table1 {
+            width: 100%;
+        }
+
+        .dataTables_wrapper {
+            padding: 10px;
+        }
+
+
+        .table {
+            width: 100%;
+            margin: auto;
+            height: 500px;
+        }
+
+        .form-group1 {
+            margin-left: 40px;
+        }
+
+        .inp {
+            background: #EA7C69;
+            /* Dropshadow */
+            box-shadow: 0px 8px 24px rgba(234, 124, 105, 0.4);
+            border-radius: 8px;
+            width: 130px;
+            height: 34px;
+            margin-left: -170px;
+            color: white;
+            margin-top: 60px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Quản lý", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Loại món ăn", "Index", "LOAIMONANs")</li>
+                    <li class="dropdown">
+
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+
+
+                            <span class="caret"></span>
+                        </a>
+
+                        @{ Html.RenderAction("Index", "MenuLoai");}
+                    </li>
+                    <li>@Html.ActionLink("Món ăn", "Index", "MONANs")</li>
+                    <li> @Html.ActionLink("Nhân Viên", "Index", "NHANVIENs")</li>
+                    <li> @Html.ActionLink("Hóa đơn", "Index", "HDs")</li>
+                    <li> @Html.ActionLink("Thống kê", "Index", "Thongke")</li>
+                    <li> @Html.ActionLink("Tài khoản", "Index", "TAIKHOANs")</li>
+                    <li> @Html.ActionLink("Quyền", "Index", "QUYENs")</li>
+                    <li style="margin-left:300px"> @Html.ActionLink("Đăng xuất", "SignOut", "Home")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer></footer>
+    </div>
+
+      @Scripts.Render("~/bundles/jquery")
+       @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+</body>
+</html>
