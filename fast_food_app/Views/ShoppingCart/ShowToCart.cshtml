@@ -1,0 +1,140 @@
+﻿@model fast_food_app.Models.Cart
+
+@{
+    ViewBag.Title = "Giỏ hàng";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    int discountId = int.Parse(TempData["Discount"].ToString());
+}
+
+<!--Bredcrum section begin-->
+<section class="breadcrumb-section set-bg" data-setbg="~/Content/img/hamburger.jpg" style="background-color: #e95050;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>@ViewBag.Title</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--Bredcrum section end-->
+@if (Model != null)
+{<!-- Shoping Cart Section Begin -->
+    <section class="shoping-cart spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    
+                    <div class="shoping__cart__table">
+                        <table>
+                            <thead>
+                                <tr style="background-color:green;color:white">
+                                    <th class="shoping__product">Món ăn</th>
+                                    <th>Giá</th>
+                                    <th>Số lượng</th>
+                                    <th>Thành tiền</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Items)
+                                {
+                                    int total = Convert.ToInt32(item._shopping_product.Gia * item._shopping_quantity);
+                                    <tr>
+                                        <td class="shoping__cart__item">
+                                            <img src="@Url.Content(item._shopping_product.Anh)" style="width:180px; height:120px" />
+
+                                            @Html.DisplayFor(model => item._shopping_product.TenMonAn)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item._shopping_product.Gia)
+                                        </td>
+                                        <td>
+                                            @using (Html.BeginForm("Update_Quantity_Cart", "ShoppingCart"))
+                                            {
+                                                <input type="hidden" value="@item._shopping_product.MaMonAn" name="ID_Product" />
+                                                <input type="number" value="@item._shopping_quantity" name="Quantity" />
+                                                <button style="background-color:green;border:2px solid white" type="submit"><i style="color:#fff" class="fa fa-retweet btn-update-cart"></i></button>
+
+
+                                            }
+
+                                        </td>
+                                        <td>@string.Format("{0:#,0}", @total)</td>
+                                        <td>
+                                            <a href="~/ShoppingCart/RemoveCart/@item._shopping_product.MaMonAn"><i style="color:red;font-size:26px" class="fa fa-minus-circle btn-remove-cart"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                            @*<tfoot>
+                                <tr>
+                                    <td colspan="5" style="text-align:right;padding:10px;"><span style="font-weight:700;">Tổng tiền: </span>@string.Format("{0:#,0}", @Model.Total_Money()) VND</td>
+                                </tr>
+                            </tfoot>*@
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shoping__cart__btns">
+                        <a href="@Url.Action("Index", "Home")" class="primary-btn cart-btn">Thêm món</a>
+                        @*<a href="#" class="primary-btn cart-btn cart-btn-right">
+                                <span class="icon_loading"></span>
+                                Upadate Cart
+                            </a>*@
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="shoping__continue">
+                        <div class="shoping__discount">
+                            <form action="~/ShoppingCart/ShowToCart">
+                                <label id="discount">Mã giảm giá: </label>
+                                <br />
+                                <select id="discount" name="discount">
+                                    <option value="-1">
+                                        Không giảm giá
+                                        @foreach (var item in new Model.DAO.Promotions_Dao().PromotionList())
+                                        {
+                                        <option value="@item.MaKM" @Html.Raw(item.MaKM == (int?)discountId ? "selected" : "")>@item.TenKM</option>
+                                        
+                                    }
+                                    </select>
+                                    <button class="btn btn-google btn-discount" type="submit">Áp dụng mã</button>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <div class="col-lg-6">
+                    
+                    <div class="shoping__checkout">
+                        @*<div>
+                            <div>
+                                <span>@Session["UserName"]</span>
+                            </div>
+                            <div>
+                                @{
+                                    DateTime currentDateTime = DateTime.Now;
+                                    string formattedDateTime = currentDateTime.ToString("dddd, dd MMMM yyyy HH:mm:ss");
+                                }
+                                <span>@formattedDateTime</span>
+                            </div>
+                        </div>*@
+                        <h5>Tổng hoá đơn: </h5>
+                        <ul>
+                            <li style="border-bottom:none">Giá tiền: <span>@string.Format("{0:#,0}", @Model.Total_Money())</span></li>
+                            <li>Giá giảm: <span>@string.Format("{0:#,0}", Model.Get_Discount_Price(discountId))</span></li>
+                            <li>Tổng tiền: <span>@string.Format("{0:#,0}", @Model.Total_Money(discountId)) VND</span></li>
+                        </ul>
+                        <a href="~/ShoppingCart/CheckOut" class="primary-btn">Thanh toán</a>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </section>
+        <!-- Shoping Cart Section End -->
+    }

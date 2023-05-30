@@ -1,0 +1,75 @@
+﻿@model Model.EF.NHANVIEN
+
+@{
+    ViewBag.Title = "Chi tiết nhân viên";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid">
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h3 class="m-0 font-weight-bold text-primary">@ViewBag.Title</h3>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive" style=" overflow-x: hidden;">
+                <dl class="dl-horizontal">
+
+
+                    <dt>
+                        Họ và tên
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.HoTenNV)
+                    </dd>
+                    <dt>
+                        Chức vụ
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.CHUCVU.TenCV)
+                    </dd>
+
+                    <dt>
+                        Số điện thoại
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.SDT)
+                    </dd>
+
+                    <dt>
+                        Ngày sinh
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.NgaySinh)
+                    </dd>
+
+                    <dt>
+                        Giới tính
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.GioiTinh)
+                    </dd>
+
+                    <dt>
+                        Hình ảnh
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.HinhAnh)
+                    </dd>
+
+                </dl>
+            </div>
+            <p>
+                @Html.ActionLink("Sửa", "Edit", new { id = Model.MaNV }, new { @class = "btn btn-success" })
+                @Html.ActionLink("Trở lại", "Index", null, new { @class = "btn btn-danger" })
+            </p>
+        </div>
+    </div>
+</div>

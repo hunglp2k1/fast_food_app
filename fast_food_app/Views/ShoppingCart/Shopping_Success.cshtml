@@ -1,0 +1,45 @@
+﻿@model fast_food_app.Models.Cart
+@{
+    ViewBag.Title = "Shopping_Success";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    Model.EF.HOADON hd = new Model.EF.HOADON();
+}
+
+<h2>@ViewBag.HoaDonId</h2>
+<div class="col-lg-6">
+
+    <div class="shoping__checkout">
+        <div>
+            <div>
+                @{
+                    int idHD = 0;
+                    if (Session["MaHD"] != null)
+                    {
+
+                        idHD = Convert.ToInt32(Session["MaHD"]);
+                    }
+
+                }
+                <span>@idHD</span>
+            </div>
+            <div>
+                <span>@Session["UserName"]</span>
+            </div>
+            <div>
+                @{
+                    DateTime currentDateTime = DateTime.Now;
+                    string formattedDateTime = currentDateTime.ToString("dddd, dd MMMM yyyy HH:mm:ss");
+                }
+                <span>@formattedDateTime</span>
+
+            </div>
+        </div>
+       @* <h5>Tổng hoá đơn: </h5>
+        <ul>
+            <li style="border-bottom:none">Giá tiền: <span>@string.Format("{0:#,0}", @Model.Total_Money())</span></li>
+            <li>Giá giảm: <span>@string.Format("{0:#,0}", Model.Get_Discount_Price(@ViewBag.Discount))</span></li>
+            <li>Tổng tiền: <span>@string.Format("{0:#,0}", @Model.Total_Money(@ViewBag.Discount)) VND</span></li>
+        </ul>*@
+        <a href="@Url.Action("Index","Home")" class="primary-btn">Tiếp tục bán hàng <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+    </div>
+</div>

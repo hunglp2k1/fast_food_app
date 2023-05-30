@@ -1,0 +1,43 @@
+﻿@model Model.EF.CHITIET_HOADON
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CHITIET_HOADON</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.HOADON.MaHD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HOADON.MaHD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MONAN.TenMonAn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MONAN.TenMonAn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SoLuong)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoLuong)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MaCTHD }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
