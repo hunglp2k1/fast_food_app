@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "Shopping_Success";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    Model.EF.HOADON hd = new Model.EF.HOADON();
+}
+
+<h2>SuccessFully</h2>
+<table>
+    <tr>
+        <th>Mã nhân viên</th>
+        <td>@hd.MaNV</td>
+    </tr>
+</table>
