@@ -23,12 +23,15 @@ namespace fast_food_app.Areas.Admin.Controllers
         }
         public ActionResult Login(LoginModel model)
         {
+
             ViewBag.Username = model.TenTaiKhoan;
             ViewBag.Password = model.MatKhau;
+
             if (ModelState.IsValid)
             {
                 Session["username"] = "";
                 var db = new FastFoodDBContext();
+
 
                 var user = db.TAIKHOANs.Where(m => m.TenTaiKhoan.Equals(model.TenTaiKhoan) && m.MatKhau.Equals(model.MatKhau)).SingleOrDefault();
                 if (user != null && user.MaQuyen.Equals(1))
@@ -50,6 +53,14 @@ namespace fast_food_app.Areas.Admin.Controllers
                 {
                     ModelState.AddModelError("", "Tài khoản bị vô hiệu hoá");
                 }
+
+                var user = db.TAIKHOANs.Where(s => s.TenTaiKhoan.Equals(model.TenTaiKhoan) && s.MatKhau.Equals(model.MatKhau)).SingleOrDefault();
+                if (user != null)
+                {
+                    Session["username"] = user.TenTaiKhoan;
+                    return RedirectToAction("Index", "Home");
+                }
+
                 else
                 {
                     ModelState.AddModelError("", "Tài khoản hoặc mật khẩu không đúng!");

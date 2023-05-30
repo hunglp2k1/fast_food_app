@@ -39,8 +39,12 @@ namespace fast_food_app.Controllers
         //method display cart
         public ActionResult ShowToCart(int discount = -1)
         {
+
             TempData["Discount"] = discount;
             Session["MaKM"] = discount;
+
+            ViewBag.Discount = discount;
+
             if (Session["Cart"] == null)
             {
                 return RedirectToAction("ShowToCart", "ShoppingCart");
@@ -78,6 +82,7 @@ namespace fast_food_app.Controllers
         }
         public ActionResult Shopping_Success()
         {
+
             Session["MaKM"] = null;
             return View();
         }
@@ -92,6 +97,19 @@ namespace fast_food_app.Controllers
                 hOADON.ThoiGian = DateTime.Now;
                 hOADON.MaNV = int.Parse(Session["UserID"].ToString());
                 hOADON.MaKM = (int)ViewBag.Discount;
+
+            return View();
+        }
+        //Method checkout
+        public ActionResult CheckOut(FormCollection form)
+        {
+            
+                Cart cart = Session["Cart"] as Cart;
+                HOADON hOADON = new HOADON();
+                hOADON.ThoiGian = DateTime.Now;
+                hOADON.MaNV = int.Parse(Session["UserID"].ToString());
+                hOADON.MaKM = null;
+
                 db.HOADONs.Add(hOADON);
                 foreach(var item in cart.Items)
                 {
@@ -101,12 +119,21 @@ namespace fast_food_app.Controllers
                     MaMonAn = item._shopping_product.MaMonAn,
                     SoLuong = item._shopping_quantity
                 };
+
                 
                 db.CHITIET_HOADON.Add(cHITIET_HOADON);
                 }
                 db.SaveChanges();            
                 cart.ClearCart();
                 return RedirectToAction("Shopping_Success", "ShoppingCart");          
+
+                db.CHITIET_HOADON.Add(cHITIET_HOADON);
+                }
+                db.SaveChanges();
+                cart.ClearCart();
+                return RedirectToAction("Shopping_Success", "ShoppingCart");
+           
+
         }
     }
 }

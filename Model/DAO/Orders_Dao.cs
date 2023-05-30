@@ -10,10 +10,12 @@ namespace Model.DAO
     public class Orders_Dao
     {
         FastFoodDBContext db;
+
         public Orders_Dao()
         {
             db = new FastFoodDBContext();
         }
+
 
         public double? Get_Promotion(int hoadonId)
         {
@@ -25,6 +27,7 @@ namespace Model.DAO
 
        
         
+
      
     }
 }

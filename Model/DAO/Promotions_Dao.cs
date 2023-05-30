@@ -21,6 +21,6 @@ namespace Model.DAO
             return promotions;
         }
 
-        
+
     }
 }

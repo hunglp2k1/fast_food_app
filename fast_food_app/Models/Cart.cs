@@ -54,6 +54,7 @@ namespace fast_food_app.Models
             else
             {
                 var promotion = db.KHUYENMAIs.Find(discount);
+
                 total = (int)(items.Sum(s => s._shopping_product.Gia * s._shopping_quantity));   
                 //Giảm % cho hoá đơn trên 200k và giảm tối đa 50k
                 if(total >= 200000)
@@ -73,6 +74,11 @@ namespace fast_food_app.Models
                     total = (int)(items.Sum(s => s._shopping_product.Gia * s._shopping_quantity));
                 }
                 
+
+                total = (int)(items.Sum(s => s._shopping_product.Gia * s._shopping_quantity));       
+                discount_price = (int)((total * promotion.TiLeGiamGia) / 100);
+                total = total - discount_price;
+
             }         
             return (int)total;
         }
