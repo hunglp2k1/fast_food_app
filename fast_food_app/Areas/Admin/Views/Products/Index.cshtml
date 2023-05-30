@@ -1,0 +1,175 @@
+﻿@*@model IEnumerable<Model.EF.MONAN>*@
+
+@using PagedList;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<Model.EF.MONAN>
+@using System.Linq;
+
+@{
+    ViewBag.Title = "Danh sách món ăn";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Default = -1;
+}
+
+@*<tr class="odd"><td valign="top" colspan="7" class="dataTables_empty">No data available in table</td></tr>*@
+
+
+
+
+<div class="container-fluid">
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h3 class="m-0 font-weight-bold text-primary">@ViewBag.Title</h3>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive" style=" overflow-x: hidden;">
+                <div class="row">
+                    <div class="col-sm-12 col-md-4">
+                        <p style="display:flex;justify-content:space-between;align-items:end">
+                            <a href='@Url.Action("Create", "Products")'>
+                                <span class="btn btn-outline-primary">Thêm mới</span>
+                            </a>
+                        </p>
+                    </div>
+                    <div class="col-sm-12 col-md-8">
+
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <label for="categoryId">Loại món ăn: </label>
+                                <select id="categoryId" class="form-control" name="categoryId">
+                                    <option value="@ViewBag.Default">Tất cả các loại</option>
+                                    @foreach (var item in new Model.DAO.Categories_Dao().CategoryList())
+                                    {
+                                        <option value="@item.MaLoaiMonAn" @Html.Raw(item.MaLoaiMonAn == (int?)ViewBag.CategoryId ? "selected" : "")>@item.TenLoaiMonAn</option>
+                                    }
+                                </select>
+
+                            </div>
+                            <div class="form-group input-search">
+                                <label for="productName">Tên món ăn:</label>
+                                <input class="form-control btn-outline-info" id="productName" name="productName" value="@ViewBag.ProductName" placeholder="Nhập tên món ăn..." />
+                            </div>
+
+                            <button type="submit" class="btn btn-info" value=""><i class="fa fa-search" aria-hidden="true"></i></button>
+                        </form>
+
+                    </div>
+
+
+                </div>
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
+                    <thead>
+                        <tr style="background-color: var(--primary-color);color:white">
+                            <th>
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().TenMonAn)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().LOAIMONAN.TenLoaiMonAn)
+                            </th>
+                          @*  <th>
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().MoTa)
+                            </th>*@
+                            <th>
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().Anh)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().Gia)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().SoLuong)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr style="background-color: var(--primary-color);color:white">
+                            <th>
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().TenMonAn)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().LOAIMONAN.TenLoaiMonAn)
+                            </th>
+                           @* <th>
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().MoTa)
+                            </th>*@
+                            <th>
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().Anh)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().Gia)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().SoLuong)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                           
+                            
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TenMonAn)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.LOAIMONAN.TenLoaiMonAn)
+                                    </td>
+                                  @*  <td>
+                                        @Html.DisplayFor(modelItem => item.MoTa)
+                                    </td>*@
+                                    <td>
+                                        <img src="@Url.Content(item.Anh)" style="height:140px;width:180px;margin:10px" />
+                                    </td>
+                                    <td>
+                                        @string.Format("{0:#,0}", item.Gia) VND
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SoLuong)
+                                    </td>
+                                    <td>
+
+                                        @Html.ActionLink("Sửa", "Edit", new { id = item.MaMonAn }, new { @class = "btn btn-success" })
+
+                                @*        @Html.ActionLink("Chi tiết", "Details", new { id = item.MaMonAn }, new { @class = "btn btn-info" })*@
+                                        @Html.ActionLink("Xoá", "Delete", new { id = item.MaMonAn }, new { @class = "btn btn-danger" })
+                                    </td>
+                                </tr>
+                            
+
+                        }
+                    </tbody>
+                </table>
+                @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter }), PagedList.Mvc.PagedListRenderOptions.PageNumbersOnly)
+
+                @*<div class="row">
+                        <div class="col-sm-12 col-md-5">
+                            <div class="" id="" role="status" aria-live="polite">Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</div>
+                        </div><div class="col-sm-12 col-md-7">
+                            <div class="dataTables_paginate paging_simple_numbers" id="">
+                                <ul class="pagination">
+                                    <li class="paginate_button page-item previous disabled" id="dataTable_previous">
+                                            <a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Trước</a>
+                                        </li>
+                                    <li class="page-">
+                                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+                                    </li>
+
+
+                                    <li class="paginate_button page-item next disabled" id="dataTable_next">
+                                            <a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">Sau</a>
+                                        </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>*@
+            </div>
+        </div>
+    </div>
+</div>

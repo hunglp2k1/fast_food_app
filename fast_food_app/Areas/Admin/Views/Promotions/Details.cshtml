@@ -1,0 +1,60 @@
+﻿@*@model Model.EF.KHUYENMAI
+
+@{
+    ViewBag.Title = "Chi tiết khuyến mãi";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>KHUYENMAI</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TenKM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenKM)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MoTa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MoTa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TiLeGiamGia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TiLeGiamGia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NgayBatDauKM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NgayBatDauKM)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NgayKetThucKM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NgayKetThucKM)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MaKM }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+*@

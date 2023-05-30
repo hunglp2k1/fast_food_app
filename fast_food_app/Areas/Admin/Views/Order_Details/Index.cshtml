@@ -1,0 +1,106 @@
+﻿@model IEnumerable<Model.EF.CHITIET_HOADON>
+
+@{
+    ViewBag.Title = "Chi tiết hoá đơn";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    int total = 0;
+}
+
+<div class="container-fluid">
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h3 class="m-0 font-weight-bold text-primary">@ViewBag.Title</h3>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive" style=" overflow-x: hidden;">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <a class="btn btn-google" href="~/Admin/Orders/Index">Quay lại</a>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div id="" class="dataTables_filter">
+                            @using (Html.BeginForm("Index", "Categories", FormMethod.Get, new { @class = "form-inline" }))
+                            {
+                                <div class="form-group">
+                                    <label>Mã hoá đơn: </label>
+                                    <input type="Text" class="form-control bg-light border-0 small .ml-1" value="@ViewBag.CategoryName" name="categoryName" placeholder="Nhập mã hoá đơn...">
+                                    <button type="submit" class="btn btn-info" value=""><i class="fa fa-search" aria-hidden="true"></i></button>
+                                </div>
+                                <hr />
+                            }
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <table class="table">
+                    <thead>
+                        <tr style="background-color: var(--primary-color);color:white">
+                            <th>
+                                Mã hoá đơn
+                            </th>
+                            <th>
+                                Món ăn
+                            </th>
+                            <th>
+                                Số lượng
+                            </th>
+                            <th>
+                                Thành tiền
+                            </th>
+                            <th></th>
+                        </tr>
+                    <thead>
+                    <tfoot>
+                        <tr style="background-color: var(--primary-color);color:white">
+                            <th>
+                                Mã hoá đơn
+                            </th>
+                            <th>
+                                Món ăn
+                            </th>
+                            <th>
+                                Số lượng
+                            </th>
+                            <th>
+                                Thành tiền
+                            </th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.HOADON.MaHD)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MONAN.TenMonAn)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SoLuong)
+                            </td>
+                            <td>
+                                @{
+                                    var price = @item.MONAN.Gia * (@item.SoLuong);
+                                    total += (int)price;
+                                }
+                                <span>@price</span>
+                            </td>
+                        </tr>
+                    }
+                </table>
+                @{
+                    var percent = new Model.DAO.Orders_Dao().Get_Promotion(ViewBag.HoaDonId);
+                    if (total >= 200000)
+                    {
+                        total = total - ((total * percent) / 100);
+                    }
+                }
+                <span>@total</span>
+            </div>
+        </div>
+    </div>
+</div>

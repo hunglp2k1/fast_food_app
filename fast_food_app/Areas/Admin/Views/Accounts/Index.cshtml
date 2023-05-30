@@ -1,0 +1,112 @@
+﻿@model IEnumerable<Model.EF.TAIKHOAN>
+
+@{
+    ViewBag.Title = "Danh sách tài khoản";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid">
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h3 class="m-0 font-weight-bold text-primary">@ViewBag.Title</h3>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive" style=" overflow-x: hidden;">
+                <div class="row">
+                    <div class="col-sm-12 col-md-4">
+                        <p style="display:flex;justify-content:space-between;align-items:end">
+                            <a href='@Url.Action("Create", "Accounts")'>
+                                <span class="btn btn-outline-primary">Thêm mới</span>
+                            </a>
+                        </p>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div id="" class="dataTables_filter">
+                            @using (Html.BeginForm("Index", "Accounts", FormMethod.Get, new { @class = "form-inline" }))
+                            {
+                                <div class="form-group">
+                                    <label>Tên nhân viên: </label>
+                                    <input type="Text" class="form-control bg-light border-0 small .ml-1" value="@ViewBag.AccountName" name="accountName" placeholder="Nhập tên nhân viên...">
+                                    <button type="submit" class="btn btn-info" value=""><i class="fa fa-search" aria-hidden="true"></i></button>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <table class="table">
+                    <thead>
+                        <tr scope="col">
+                            <th>
+                                Họ và tên
+                            </th>
+                            <th>
+                                Quyền truy cập
+                            </th>
+                            <th>
+                                Tên tài khoản
+                            </th>
+                            <th>
+                                Trạng thái
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr scope="col">
+                            <th>
+                                Họ và tên
+                            </th>
+                            <th>
+                                Quyền truy cập
+                            </th>
+                            <th>
+                                Tên tài khoản
+                            </th>
+                            <th>
+                                Trạng thái
+                            </th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NHANVIEN.HoTenNV)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.QUYEN.TenQuyen)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TenTaiKhoan)
+                            </td>
+                            <td>
+                                @if (item.TrangThai == false)
+                                {
+                                    <span style="color:red">Vô hiệu</span>
+                                }
+                                else if (item.TrangThai == true)
+                                { <span style="color:green">Đã kích hoạt</span>}
+                                else
+                                {
+                                    <span style="color:yellow">Chưa kích hoạt</span>
+                                }
+                            </td>
+                            <td>
+                                @Html.ActionLink("Sửa", "Edit", new { id = item.MaTK }, new { @class = "btn btn-success" })
+                                @*@Html.ActionLink("Chi tiết", "Details", new { id = item.MaTK }, new { @class = "btn btn-info" })*@
+                                @Html.ActionLink("Xoá", "Delete", new { id = item.MaTK }, new { @class = "btn btn-danger" })
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

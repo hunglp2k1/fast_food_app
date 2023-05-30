@@ -1,0 +1,99 @@
+﻿@model IEnumerable<Model.EF.LOAIMONAN>
+@*@model PagedList.IPagedList<Model.EF.LOAIMONAN>
+    @using PagedList.Mvc;*@
+@using System.Linq;
+@{
+    ViewBag.Title = "Danh sách loại món ăn | combo";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid">
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h3 class="m-0 font-weight-bold text-primary">@ViewBag.Title</h3>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive" style=" overflow-x: hidden;">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <p style="display:flex;justify-content:space-between;align-items:end">
+                            <a href='@Url.Action("Create", "Categories")'>
+                                <span class="btn btn-outline-primary">Thêm mới</span>
+                            </a>
+                        </p>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div id="" class="dataTables_filter">
+                            @using (Html.BeginForm("Index", "Categories", FormMethod.Get, new { @class = "form-inline" }))
+                            {
+                                <div class="form-group">
+                                    <label>Tên loại món ăn: </label>
+                                    <input type="Text" class="form-control bg-light border-0 small .ml-1" value="@ViewBag.CategoryName" name="categoryName" placeholder="Nhập tên loại món ăn...">
+                                    <button type="submit" class="btn btn-info" value=""><i class="fa fa-search" aria-hidden="true"></i></button>
+                                </div>
+                                <hr />
+                            }
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
+                    <thead>
+                        <tr>
+                            <th colspan="6" scope="col">
+                                @Html.DisplayNameFor(model => model.TenLoaiMonAn)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th colspan="6" scope="col">
+                                @Html.DisplayNameFor(model => model.TenLoaiMonAn)
+                            </th>
+
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TenLoaiMonAn)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Sửa", "Edit", new { id = item.MaLoaiMonAn }, new { @class = "btn btn-success" })
+                                    @Html.ActionLink("Xoá", "Delete", new { id = item.MaLoaiMonAn }, new { @class = "btn btn-danger" })
+                                </td>
+
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+                <!--<div class="row">
+        <div class="col-sm-12 col-md-5">
+            <div class="" id="" role="status" aria-live="polite">Trang                                          (Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of Model.PageCount</div>
+        </div><div class="col-sm-12 col-md-7">
+            <div class="dataTables_paginate paging_simple_numbers" id="">
+                <ul class="pagination">-->
+                @*<li class="paginate_button page-item previous disabled" id="dataTable_previous">
+            <a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Trước</a>
+        </li>*@
+                <!--<li class="page-">
+                                                        Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+    </li>-->
+                @*<li class="paginate_button page-item next disabled" id="dataTable_next">
+            <a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">Sau</a>
+        </li>*@
+                <!--</ul>
+            </div>
+        </div>
+    </div>-->
+            </div>
+        </div>
+    </div>
+</div>
