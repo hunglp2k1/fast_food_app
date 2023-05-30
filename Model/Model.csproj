@@ -57,6 +57,9 @@
     <Compile Include="DAO\Accounts_Dao.cs" />
     <Compile Include="DAO\Categories_Dao.cs" />
     <Compile Include="DAO\Orders_Dao.cs" />
+
+    <Compile Include="DAO\Order_Details_Dao.cs" />
+
     <Compile Include="DAO\Products_Dao.cs" />
     <Compile Include="DAO\Promotions_Dao.cs" />
     <Compile Include="DAO\Roles_Dao.cs" />

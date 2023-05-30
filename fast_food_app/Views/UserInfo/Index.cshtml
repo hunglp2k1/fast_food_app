@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+<hr />
+
+<div id="user-info" class="container d-lg-flex justify-content-center align-items-lg-center align-content-between">
+    
+    <table style="width: 100%; height: 530px; border-spacing: 20px; border-collapse: inherit; background-color: #8edae8">
+        <tr>
+            <th>Avatar:</th>
+            @if (Session["UserImage"] != null)
+            {
+                <td><img src="@Url.Content(Session["UserImage"].ToString())" style="height:160px;width:180px;margin:10px;border-radius:50%" /></td>
+            }
+
+        </tr>
+        <tr>
+            <th>Tên nhân viên:</th>
+            @if (Session["UserName"] != null)
+            {
+                <td>@Session["UserName"].ToString()</td>
+            }
+
+        </tr>
+        <tr>
+            <th>Giới tính:</th>
+            @if (Session["UserGender"] != null)
+            {
+                var gender = Session["UserGender"].ToString().ToLower();
+                if (gender == "false")
+                {
+                    <td>Nữ</td>
+                }
+                else if (gender == "true")
+                {
+                    <td>Nam</td>
+                }
+                else
+                {
+                    <td>Giới tính khác</td>
+                }
+            }
+
+        </tr>
+        <tr>
+            <th>Chức vụ:</th>
+            @if (Session["UserPosition"] != null)
+            {
+                <td>@Session["UserPosition"].ToString()</td>
+            }
+
+        </tr>
+
+    </table>
+</div>
+
+

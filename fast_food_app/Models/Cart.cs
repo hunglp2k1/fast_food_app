@@ -54,9 +54,31 @@ namespace fast_food_app.Models
             else
             {
                 var promotion = db.KHUYENMAIs.Find(discount);
+
+                total = (int)(items.Sum(s => s._shopping_product.Gia * s._shopping_quantity));   
+                //Giảm % cho hoá đơn trên 200k và giảm tối đa 50k
+                if(total >= 200000)
+                {
+                    discount_price = (int)((total * promotion.TiLeGiamGia) / 100);
+                    if(discount_price <= 50000) {
+                        total = total - discount_price;
+                    }
+                    else
+                    {
+                        total = (int)(items.Sum(s => s._shopping_product.Gia * s._shopping_quantity) - 50000);
+                    }
+                    
+                }
+                else
+                {
+                    total = (int)(items.Sum(s => s._shopping_product.Gia * s._shopping_quantity));
+                }
+                
+
                 total = (int)(items.Sum(s => s._shopping_product.Gia * s._shopping_quantity));       
                 discount_price = (int)((total * promotion.TiLeGiamGia) / 100);
                 total = total - discount_price;
+
             }         
             return (int)total;
         }

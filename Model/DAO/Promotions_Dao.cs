@@ -20,5 +20,7 @@ namespace Model.DAO
             var promotions = db.KHUYENMAIs.ToList();
             return promotions;
         }
+
+
     }
 }

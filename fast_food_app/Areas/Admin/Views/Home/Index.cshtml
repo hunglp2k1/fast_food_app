@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "Trang chủ";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="container-fluid">
+
+    <!-- DataTales Example -->
+    <div style="background-color:#ccc" class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h3 class="m-0 font-weight-bold text-primary">Trang chủ</h3>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive" style=" overflow-x: hidden;">
+                <div style="height:640px;" class="container">
+                    <div style="width:100%" class="col-lg-12 d-flex flex-row justify-content-lg-center align-items-lg-center time-box position-relative">
+                        <img src="~/Content/img/admin-img.jpg" style="width:86%" alt="FastFoodBanner" />
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; font-size: 78px; font-weight: 600; letter-spacing: 3px; background-color: black; padding: 20px; border: 4px solid white;">
+                            @if (Session["UserName"] != null)
+                            {
+                                <p style="color:#fff; text-align: center;font-size:24px;font-weight: 900;margin-top:-40px;background-color:black;padding:20px;border:4px solid white;width:100%;" class="hello-text">Xin chào <span id="">@Session["UserName"].ToString() <i class="fa fa-unlock" aria-hidden="true"></i></span></p>
+                            }
+                            else
+                            {
+                                Response.Redirect("~/Login/Index");
+                            }
+
+                            <span style="font-size:40px" id="current-time">12:00:00</span>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
