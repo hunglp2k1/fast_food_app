@@ -1,0 +1,110 @@
+﻿@model IEnumerable<Model.EF.MONAN>
+
+@{
+    ViewBag.Title = "THỰC ĐƠN";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    var loaiMonAns = new Model.DAO.Categories_Dao().CategoryList();
+    ViewBag.Default = -1;
+}
+
+<div class="container">
+    <div class="col-lg-12 d-flex flex-row justify-content-lg-center align-items-lg-center time-box position-relative">
+        <img src="~/Content/img/hamburger.jpg" alt="FastFoodBanner" />
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; font-size: 78px; font-weight: 600; letter-spacing: 3px; background-color: black; padding: 20px; border: 4px solid white;">
+            @if (Session["UserName"] != null)
+            {
+                <p style="color: #fff; text-align: center;font-size:24px;font-weight: 900;margin-top:-40px;background-color:black;padding:20px;border:4px solid white;" class="hello-text">Xin chào <span id="">@Session["UserName"].ToString() <i class="fa fa-hand-peace-o" aria-hidden="true"></i></span></p>
+            }
+            else
+            {
+                Response.Redirect("~/Login/Index");
+            }
+
+            <span id="current-time">12:00:00</span>
+        </div>
+
+
+    </div>
+</div>
+
+
+
+
+<!-- Featured Section Begin -->
+<section class="featured spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2 id="menu">@ViewBag.Title</h2>
+                </div>
+                <div class="featured__controls" style="color:white">
+                    <ul class="list-menu">
+                        <li class="item-menu"><a href="Index?categoryId=@ViewBag.Default">Tất cả</a></li>
+                        @foreach (var item in new Model.DAO.Categories_Dao().CategoryList())
+                        {
+                            <li class="item-menu" data-filter="*"><a href="Index?categoryId=@item.MaLoaiMonAn" target="_top">@item.TenLoaiMonAn</a></li>                          
+                        }
+
+                    </ul>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-7">
+            <div class="filter__item">
+                <div class="row flex-row align-items-lg-center" style="margin-bottom: 10px; color: green;">
+                    <div class="col-lg-5 col-md-5">
+                        <div class="filter__sort">
+                            <form action="~/Home/Index" method="get">
+                                <select name="sortByPrice" style="display: none;">
+                                    <option @Html.Raw("DEFAULT"== (string?)ViewBag.SortByPrice ? "selected" : "") value="">Mặc định</option>
+                                    <option @Html.Raw("DESC"== (string?)ViewBag.SortByPrice ? "selected" : "") value="DESC">Giá giảm dần</option>
+                                    <option @Html.Raw("ASC"== (string?)ViewBag.SortByPrice ? "selected" : "") value="ASC">Giá tăng dần</option>
+                                </select>
+                                <button class="btn btn-secondary" type="submit">Sắp xếp</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4">
+                        <div style="background-color:red;width:40%; text-align:center; border-radius:8px;" class="filter__found">
+                            <p style="color: #fff;font-weight:700"><span>@Model.Count()</span> - Món ăn </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-3">
+                        <form action="~/Home/Index" method="get">
+                            <input style=" border-radius: 4px;border: 1px solid green;padding:8px;width:66%;height:100%" type="text" placeholder="Nhập tên món..." name="productName" value="@ViewBag.ProductName">
+                            <button style="width:20%;height:60%;border-radius:6px;text-align:center;padding:8px;" type="submit" class="btn btn-success"><i style="font-size:16px" class="fa fa-search btn-search-product" aria-hidden="true"></i></button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div style="border: 1px solid #ccc; border-radius:4px; padding: 10px; box-shadow: 2px 2px 2px 1px #808080; " class="product__item col">
+                            <div class="product__item__pic set-bg" data-setbg="@item.Anh">
+                                <img src="@Url.Content(item.Anh)" alt="@item.TenMonAn" />
+                                <ul class="product__item__pic__hover">
+                                    <li><a href="~/ShoppingCart/AddToCart/@item.MaMonAn"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="product__item__text">
+                                <p style="font-weight:700;color:#000">@item.TenMonAn</p>
+                                <p style="font-weight:600;color:green">@string.Format("{0:#,0}", item.Gia) VND</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
+
+    </div>
+</section>
+<!-- Featured Section End -->
